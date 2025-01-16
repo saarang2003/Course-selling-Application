@@ -1,10 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from '../feature/authSlice.js';
+import rootReducer from "./rootReducer";
+import { authApi } from "@/feature/api/authApi";
 
-
-export const appStore = configureStore({
-    reducer : {
-        auth : authReducer
-    }
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authApi.middleware)
 });
-
