@@ -2,6 +2,7 @@ import express from 'express';
 import {User} from '../models/user_model.js'
 import bcrypt from 'bcryptjs'
 import { generateToken } from '../utils/generateToken.js';
+import { deleteMediaFromCloudinary, uploadMedia } from '../utils/cloudinary.js';
 
 export const register = async (req,res) => {
     try {
@@ -69,6 +70,90 @@ export const login = async (req,res) => {
         return res.status(500).json({
             success:false,
             message:"Failed to login"
+        })
+    }
+}
+
+export const logout = async(_,res) =>{
+    try {
+        
+        return res.status(200).cookie("token" , "" ,{maxAge : 0}).json({
+            message :"Logout Successfully",
+            success : true,
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:"Failed to login"
+        })
+    }
+}
+
+export const getUserProfile = async(req,res) =>{
+    try {
+
+        const userId = req.id;
+        const user = await User.findById(userId).select("-password");
+        if(!user){
+            return res.status(404).json({
+                message:"Profile not found",
+                success:false
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            user
+        })
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:"Failed to login"
+        })
+    }
+}
+
+
+
+export const updateProfile = async (req,res) => {
+    try {
+        const userId = req.id;
+        const {name} = req.body;
+        const profilePhoto = req.file;
+
+        const user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({
+                message:"User not found",
+                success:false
+            }) 
+        }
+        // extract public id of the old image from the url is it exists;
+        if(user.photoUrl){
+            const publicId = user.photoUrl.split("/").pop().split(".")[0]; // extract public id
+            deleteMediaFromCloudinary(publicId);
+        }
+
+        // upload new photo
+        const cloudResponse = await uploadMedia(profilePhoto.path);
+        const photoUrl = cloudResponse.secure_url;
+
+        const updatedData = {name, photoUrl};
+        const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {new:true}).select("-password");
+
+        return res.status(200).json({
+            success:true,
+            user:updatedUser,
+            message:"Profile updated successfully."
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:"Failed to update profile"
         })
     }
 }

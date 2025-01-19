@@ -29,9 +29,9 @@ function Course() {
           Best Seller  
         </Badge>
       </div>
-      <div className='flex flex-col gap-2 '>
+      <div className='flex flex-col '>
         <CardDescription>
-          
+        Master Nextjs by building 10 projects in 10 days .
         </CardDescription>
 
       </div>

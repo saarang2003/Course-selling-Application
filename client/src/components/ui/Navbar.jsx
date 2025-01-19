@@ -28,13 +28,14 @@ import { useLoginMutation } from '@/feature/api/authApi'
 
 
 function Navbar() {
-    const {user} = useSelector((store) => store.auth); 
+    // const {user} = useSelector((store) => store.auth); 
     const [logout , {data , isSuccess}] = useLoginMutation();
      const navigate = useNavigate();
      const logoutHandler = async() =>{
       await logoutUser();
      }
 
+     const user = true;
      useEffect(() => {
       if (isSuccess) {
         toast.success(data?.message || "User log out.");
