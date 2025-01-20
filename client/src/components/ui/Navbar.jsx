@@ -23,19 +23,19 @@ import { useSelector } from 'react-redux'
 import { Button } from './button'
 import { Link, useNavigate } from 'react-router-dom'
 import DarkMode from '@/DarkMode'
-import { useLoginMutation } from '@/feature/api/authApi'
+import { useLoginMutation, useLogoutUserMutation } from '@/feature/api/authApi'
+import { toast } from 'sonner'
 
 
 
 function Navbar() {
-    // const {user} = useSelector((store) => store.auth); 
-    const [logout , {data , isSuccess}] = useLoginMutation();
+    const {user} = useSelector((store) => store.auth); 
+    const [logout , {data , isSuccess}] = useLogoutUserMutation();
      const navigate = useNavigate();
      const logoutHandler = async() =>{
-      await logoutUser();
+      await logout();
      }
 
-     const user = true;
      useEffect(() => {
       if (isSuccess) {
         toast.success(data?.message || "User log out.");
