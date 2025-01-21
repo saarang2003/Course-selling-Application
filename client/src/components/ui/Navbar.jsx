@@ -12,8 +12,10 @@ import {
   import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
   import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetDescription,
+    SheetFooter,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
@@ -145,7 +147,7 @@ const MobileNavbar = ({user}) => {
         {user?.role === "instructor" && (
           <SheetFooter>
             <SheetClose asChild>
-              <Button type="submit" onClick={()=> navigate("/admin/dashboard")}>Dashboard</Button>
+              <Button type="submit" onClick={()=> navigate("/admin/dashboard")} >Dashboard</Button>
             </SheetClose>
           </SheetFooter>
         )}
