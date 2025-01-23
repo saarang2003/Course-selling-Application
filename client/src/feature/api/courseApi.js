@@ -1,3 +1,4 @@
+import EditCourse from "@/pages/admin/course/EditCourse";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
@@ -26,13 +27,45 @@ export const courseApi = createApi({
                 url : "",
                 method : "GET"
             }),
-    invalidatesTags : ["Refetch_create_course"] , 
-
+    providesTags : ["Refetch_create_course"] , 
         }),
+        editCourse : builder.mutation({
+            query : ({formData , courseId}) =>({
+                url : `/${courseId}`,
+                method : "PUT" , 
+                body :formData
+            }
+            ),
+        invalidatesTags : ["Refetch_create_course"] , 
+        }),
+        getCourseById : builder.query({
+            query : ({formData , courseId}) =>({
+                url : `/${courseId}`,
+                method : 'GET' , 
+            })
+        }),
+        createLecture : builder.mutation({
+            query : ({lectureTitle , courseId}) =>({
+                url : `/${courseId}/lecture`,
+                method : "POST",
+                body : {lectureTitle}
+            })
+        }),
+        getCourseLecture : builder.query({
+            query : (courseId) =>({
+                url : `/${courseId}/lecture`,
+                method : "GET",
+            })
+        }),
+    
     })
 });
 
 export const {
     useCreateCourseMutation ,
-    useGetCreatorCourseQuery
+    useGetCreatorCourseQuery ,
+    useEditCourseMutation ,
+    useGetCourseByIdQuery ,
+    useCreateLectureMutation , 
+    useGetCourseLectureQuery
 } = courseApi;
