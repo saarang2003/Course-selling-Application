@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectDb from './database/db.js';
 import userRoutes from './routes/user.routes.js'
 import courseRoutes from './routes/course.routes.js'
+import mediaRoutes from './routes/media.routes.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 
@@ -19,7 +20,7 @@ app.use(cors({
     origin:"http://localhost:5173",
     credentials:true
 }));
-
+app.use('/api/v1/media' , mediaRoutes)
 app.use("/api/v1/user" , userRoutes );
 app.use('/api/v1/course' , courseRoutes);
 

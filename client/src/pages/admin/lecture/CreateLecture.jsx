@@ -34,14 +34,16 @@ const CreateLecture = () => {
       toast.success(data.message);
     }
     if (error) {
-      toast.error(error.data.message);
+      console.log("Error details:", error);  // Log the entire error object for more context
+      toast.error(error.data?.message || "An error occurred");
     }
   }, [isSuccess, error]);
+  
 
-  console.log(lectureData);
+  console.log( "lectue data ", lectureData);
 
   return (
-    <div className="flex-1 mx-10">
+    <div className="flex-1 mx-10 my-24">
       <div className="mb-4">
         <h1 className="font-bold text-xl">
           Let's add lectures, add some basic details for your new lecture

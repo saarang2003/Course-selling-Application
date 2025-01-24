@@ -61,13 +61,16 @@ const invoices = [
 ];
 
 const CourseTable = () => {
-    const {data, isLoading} = useGetCreatorCourseQuery();
+    const {data, isLoading } = useGetCreatorCourseQuery();
   const navigate = useNavigate();
+  console.log("data from tab" , data);
+  
+
 
   if(isLoading) return <h1>Loading...</h1>
  
   return (
-    <div>
+    <div className="my-24">
       <Button onClick={() => navigate(`create`)}>Create a new course</Button>
       <Table>
         <TableCaption>A list of your recent courses.</TableCaption>
