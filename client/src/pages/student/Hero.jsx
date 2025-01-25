@@ -1,19 +1,4 @@
 import React from 'react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import ImageSlider from '@/components/ImageSlider';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

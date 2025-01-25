@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetCreatorCourseQuery } from "@/feature/api/courseApi";
+import { useGetCreatorCourseQuery } from "@/features/api/courseApi";
 import { Edit } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -61,16 +61,13 @@ const invoices = [
 ];
 
 const CourseTable = () => {
-    const {data, isLoading } = useGetCreatorCourseQuery();
+    const {data, isLoading} = useGetCreatorCourseQuery();
   const navigate = useNavigate();
-  console.log("data from tab" , data);
-  
-
 
   if(isLoading) return <h1>Loading...</h1>
  
   return (
-    <div className="my-24">
+    <div>
       <Button onClick={() => navigate(`create`)}>Create a new course</Button>
       <Table>
         <TableCaption>A list of your recent courses.</TableCaption>

@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import Lecture from "./Lecture.jsx";
-import { useCreateLectureMutation, useGetCourseLectureQuery } from "@/feature/api/courseApi";
+import Lecture from "./Lecture";
+import { useCreateLectureMutation, useGetCourseLectureQuery } from "@/features/api/courseApi";
 
 const CreateLecture = () => {
   const [lectureTitle, setLectureTitle] = useState("");
@@ -34,16 +35,14 @@ const CreateLecture = () => {
       toast.success(data.message);
     }
     if (error) {
-      console.log("Error details:", error);  // Log the entire error object for more context
-      toast.error(error.data?.message || "An error occurred");
+      toast.error(error.data.message);
     }
   }, [isSuccess, error]);
-  
 
-  console.log( "lectue data ", lectureData);
+  console.log(lectureData);
 
   return (
-    <div className="flex-1 mx-10 my-24">
+    <div className="flex-1 mx-10">
       <div className="mb-4">
         <h1 className="font-bold text-xl">
           Let's add lectures, add some basic details for your new lecture

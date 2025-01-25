@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCreateCourseMutation } from "@/feature/api/courseApi";
+import { useCreateCourseMutation } from "@/features/api/courseApi";
 
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -39,12 +38,12 @@ const AddCourse = () => {
   useEffect(()=>{
     if(isSuccess){
         toast.success(data?.message || "Course created.");
-        navigate("/admin/courses");
+        navigate("/admin/course");
     }
   },[isSuccess, error])
 
   return (
-    <div className="flex-1 mx-10 my-24">
+    <div className="flex-1 mx-10">
       <div className="mb-4">
         <h1 className="font-bold text-xl">
           Lets add course, add some basic course details for your new course

@@ -1,9 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDb from './database/db.js';
-import userRoutes from './routes/user.routes.js'
-import courseRoutes from './routes/course.routes.js'
-import mediaRoutes from './routes/media.routes.js';
+import userRoutes from './routes/user.route.js'
+import courseRoutes from './routes/course.route.js'
+import mediaRoutes from './routes/media.route.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 

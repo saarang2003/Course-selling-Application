@@ -1,15 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./rootReducer";
-import { authApi } from "@/feature/api/authApi";
-import { courseApi } from "@/feature/api/courseApi";
+import {configureStore} from "@reduxjs/toolkit" 
+import rootRedcuer from "./rootRedcuer";
+import { authApi } from "@/features/api/authApi";
+import { courseApi } from "@/features/api/courseApi";
+// import { purchaseApi } from "@/features/api/purchaseApi";
+// import { courseProgressApi } from "@/features/api/courseProgressApi";
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware , courseApi.middleware)
+export const appStore = configureStore({
+    reducer: rootRedcuer,
+    middleware:(defaultMiddleware) => defaultMiddleware().concat(authApi.middleware, courseApi.middleware)
 });
 
 const initializeApp = async () => {
-  await store.dispatch(authApi.endpoints.loadUser.initiate({},{forceRefetch:true}))
+    await appStore.dispatch(authApi.endpoints.loadUser.initiate({},{forceRefetch:true}))
 }
 initializeApp();

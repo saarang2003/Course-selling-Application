@@ -1,8 +1,7 @@
-import express from 'express';
-import {User} from '../models/user_model.js'
-import bcrypt from 'bcryptjs'
-import { generateToken } from '../utils/generateToken.js';
-import { deleteMediaFromCloudinary, uploadMedia } from '../utils/cloudinary.js';
+import {User} from "../models/user.model.js";
+import bcrypt from "bcryptjs";
+import { generateToken } from "../utils/generateToken.js";
+import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 
 export const register = async (req,res) => {
     try {
@@ -39,7 +38,6 @@ export const register = async (req,res) => {
         })
     }
 }
-
 export const login = async (req,res) => {
     try {
         const {email, password} = req.body;
@@ -73,28 +71,24 @@ export const login = async (req,res) => {
         })
     }
 }
-
-export const logout = async(_,res) =>{
+export const logout = async (_,res) => {
     try {
-        
-        return res.status(200).cookie("token" , "" ,{maxAge : 0}).json({
-            message :"Logout Successfully",
-            success : true,
+        return res.status(200).cookie("token", "", {maxAge:0}).json({
+            message:"Logged out successfully.",
+            success:true
         })
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             success:false,
-            message:"Failed to login"
-        })
+            message:"Failed to logout"
+        }) 
     }
 }
-
-export const getUserProfile = async(req,res) =>{
+export const getUserProfile = async (req,res) => {
     try {
-
         const userId = req.id;
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(userId).select("-password").populate("enrolledCourses");
         if(!user){
             return res.status(404).json({
                 message:"Profile not found",
@@ -105,18 +99,14 @@ export const getUserProfile = async(req,res) =>{
             success:true,
             user
         })
-        
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             success:false,
-            message:"Failed to login"
+            message:"Failed to load user"
         })
     }
 }
-
-
-
 export const updateProfile = async (req,res) => {
     try {
         const userId = req.id;
