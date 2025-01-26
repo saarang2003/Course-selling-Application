@@ -6,7 +6,7 @@ import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 export const register = async (req,res) => {
     try {
        
-        const {name, email, password} = req.body; // patel214
+        const {name, email, password} = req.body; 
         if(!name || !email || !password){
             return res.status(400).json({
                 success:false,
@@ -64,7 +64,7 @@ export const login = async (req,res) => {
         generateToken(res, user, `Welcome back ${user.name}`);
 
     } catch (error) {
-        console.log(error);
+        console.log("error from login" , error.message);
         return res.status(500).json({
             success:false,
             message:"Failed to login"

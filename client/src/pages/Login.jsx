@@ -1,4 +1,3 @@
-// McgPr7oX7v1mMcbN
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,8 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useLoginUserMutation, useRegisterUserMutation } from "@/features/api/authApi";
-
+import { useLoginUserMutation, useRegisterUserMutation } from "@/features/api/authApi.js";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +33,7 @@ const Login = () => {
       isSuccess: registerIsSuccess,
     },
   ] = useRegisterUserMutation();
+
   const [
     loginUser,
     {
@@ -44,6 +43,7 @@ const Login = () => {
       isSuccess: loginIsSuccess,
     },
   ] = useLoginUserMutation();
+
   const navigate = useNavigate();
 
   const changeInputHandler = (e, type) => {
@@ -58,32 +58,35 @@ const Login = () => {
   const handleRegistration = async (type) => {
     const inputData = type === "signup" ? signupInput : loginInput;
     const action = type === "signup" ? registerUser : loginUser;
-    await action(inputData);
+  
+    try {
+      await action(inputData).unwrap();
+    } catch (error) {
+      toast.error(error?.data?.message || "An unexpected error occurred.");
+    }
   };
 
   useEffect(() => {
-    if(registerIsSuccess && registerData){
-      toast.success(registerData.message || "Signup successful.")
+    if (registerIsSuccess && registerData) {
+      toast.success(registerData?.message || "Signup successful!");
+      navigate("/"); // Adjust this route as needed
     }
-    if(registerError){
-      toast.error(registerError.data.message || "Signup Failed");
+  
+    if (registerError) {
+      toast.error(registerError?.data?.message || "Signup failed!");
     }
-    if(loginIsSuccess && loginData){
-      toast.success(loginData.message || "Login successful.");
-      navigate("/");
+  }, [registerIsSuccess, registerData, registerError, navigate]);
+
+  useEffect(() => {
+    if (loginIsSuccess && loginData) {
+      toast.success(loginData?.message || "Login successful!");
+      navigate("/"); // Adjust this route as needed
     }
-    if(loginError){ 
-      console.log(loginError.message); // Example
-      toast.error(loginError.data.message || "login Failed");
+  
+    if (loginError) {
+      toast.error(loginError?.data?.message || "Login failed!");
     }
-  }, [
-    loginIsLoading,
-    registerIsLoading,
-    loginData,
-    registerData,
-    loginError,
-    registerError,
-  ]);
+  }, [loginIsSuccess, loginData, loginError, navigate]);
 
   return (
     <div className="flex items-center w-full justify-center mt-20">

@@ -63,11 +63,13 @@ const invoices = [
 const CourseTable = () => {
     const {data, isLoading} = useGetCreatorCourseQuery();
   const navigate = useNavigate();
+  console.log("dara is " , data);
+  if (!data || !data.courses) return <h1>No courses available</h1>;
 
   if(isLoading) return <h1>Loading...</h1>
  
   return (
-    <div>
+    <div >
       <Button onClick={() => navigate(`create`)}>Create a new course</Button>
       <Table>
         <TableCaption>A list of your recent courses.</TableCaption>

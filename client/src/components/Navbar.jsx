@@ -50,7 +50,7 @@ function Navbar() {
       
     <div className="max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full">
         <div className="flex items-center gap-2">
-            <Link>
+            <Link to={'/'}>
           <School size={"30"} />
             <h1 className="hidden md:block font-extrabold text-2xl">Academix
             </h1>

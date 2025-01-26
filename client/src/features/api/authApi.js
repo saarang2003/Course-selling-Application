@@ -1,7 +1,8 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import { userLoggedIn, userLoggedOut } from "../authSlice";
+import { userLoggedIn, userLoggedOut } from "../authSlice.js";
+import { toast } from "sonner";
 
-const USER_API = "http://localhost:8080/api/v1/user/"
+const USER_API = "http://localhost:8000/api/v1/user/"
 
 export const authApi = createApi({
     reducerPath:"authApi",
@@ -23,12 +24,23 @@ export const authApi = createApi({
                 method:"POST",
                 body:inputData
             }),
-            async onQueryStarted(_, {queryFulfilled, dispatch}) {
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled;
-                    dispatch(userLoggedIn({user:result.data.user}));
+            
+                    console.log("Login response:", result); // Log the full response for debugging
+            
+                    const user = result.data.user;
+                    dispatch(userLoggedIn({ user }));
+                    dispatch(userLoggedIn({ user }));
+console.log("Updated Redux state:", appStore.getState());
+            
+                    toast.success(result.data.message || "Login successful!");
                 } catch (error) {
-                    console.log(error);
+                    console.error("Error during login:", error); // Log the full error
+            
+                    const errorMessage = error?.error?.data?.message || "Unexpected error occurred";
+                    toast.error(errorMessage);
                 }
             }
         }),
@@ -53,7 +65,7 @@ export const authApi = createApi({
             async onQueryStarted(_, {queryFulfilled, dispatch}) {
                 try {
                     const result = await queryFulfilled;
-                    dispatch(userLoggedIn({user:result.data.user}));
+                    dispatch(userLoggedIn({user : result.data.user}));
                 } catch (error) {
                     console.log(error);
                 }
@@ -69,6 +81,8 @@ export const authApi = createApi({
         })
     })
 });
+
+
 export const {
     useRegisterUserMutation,
     useLoginUserMutation,

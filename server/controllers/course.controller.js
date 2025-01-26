@@ -89,6 +89,7 @@ export const getPublishedCourse = async (_,res) => {
         })
     }
 }
+
 export const getCreatorCourses = async (req,res) => {
     try {
         const userId = req.id;
@@ -102,13 +103,14 @@ export const getCreatorCourses = async (req,res) => {
         return res.status(200).json({
             courses,
         })
-    } catch (error) {
+    }catch (error) {
         console.log(error);
         return res.status(500).json({
             message:"Failed to create course"
         })
     }
 }
+
 export const editCourse = async (req,res) => {
     try {
         const courseId = req.params.courseId;
@@ -322,7 +324,7 @@ export const togglePublishCourse = async (req,res) => {
                 message:"Course not found!"
             });
         }
-        // publish status based on the query paramter
+        // publish status based on the query parameter
         course.isPublished = publish === "true";
         await course.save();
 
