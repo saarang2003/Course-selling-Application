@@ -9,6 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useGetCourseByIdQuery } from "@/features/api/courseApi";
+import { useGetCourseDetailWithStatusQuery } from "@/features/api/purchaseApi";
 import { BadgeInfo, Lock, PlayCircle } from "lucide-react";
 import React from "react";
 import ReactPlayer from "react-player";
@@ -18,8 +20,12 @@ const CourseDetail = () => {
   const params = useParams();
   const courseId = params.courseId;
   const navigate = useNavigate();
-  const { data, isLoading, isError } =
-    useGetCourseDetailWithStatusQuery(courseId);
+  // const { data, isLoading, isError } =
+  //   useGetCourseDetailWithStatusQuery(courseId);
+
+    const {data , isLoading , isError} = useGetCourseByIdQuery(courseId);
+
+    console.log("data sid s" , data)
 
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h>Failed to load course details</h>;
@@ -28,13 +34,13 @@ const CourseDetail = () => {
   console.log(purchased);
 
   const handleContinueCourse = () => {
-    if(purchased){
+    if(true){
       navigate(`/course-progress/${courseId}`)
     }
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 my-24">
       <div className="bg-[#2D2F31] text-white">
         <div className="max-w-7xl mx-auto py-8 px-4 md:px-8 flex flex-col gap-2">
           <h1 className="font-bold text-2xl md:text-3xl">
@@ -44,14 +50,14 @@ const CourseDetail = () => {
           <p>
             Created By{" "}
             <span className="text-[#C0C4FC] underline italic">
-              {course?.creator.name}
+              Patel
             </span>
           </p>
           <div className="flex items-center gap-2 text-sm">
             <BadgeInfo size={16} />
             <p>Last updated {course?.createdAt.split("T")[0]}</p>
           </div>
-          <p>Students enrolled: {course?.enrolledStudents.length}</p>
+          <p>Students enrolled: 4</p>
         </div>
       </div>
       {/* Description */}
@@ -73,7 +79,7 @@ const CourseDetail = () => {
                   <span>
                     {true ? <PlayCircle size={14} /> : <Lock size={14} />}
                   </span>
-                  <p>{lecture.lectureTitle}</p>
+                  <p>{lecture}</p>
                 </div>
               ))}
             </CardContent>
@@ -83,11 +89,11 @@ const CourseDetail = () => {
           <Card>
             <CardContent className="p-4 flex flex-col">
               <div className="w-full aspect-video mb-4">
-                <ReactPlayer
+                <img
                   width="100%"
                   height={"100%"}
-                  url={course.lectures[0].videoUrl}
-                  controls={true}
+                  src={course?.courseThumbnail}
+                  // controls={true}
                 />
               </div>
               <h1>Lecture title</h1>
@@ -95,7 +101,7 @@ const CourseDetail = () => {
               <h1 className="text-lg md:text-xl font-semibold">Course Price</h1>
             </CardContent>
             <CardFooter className="flex justify-center p-4">
-              {purchased ? (
+              {true ? (
                 <Button onClick={handleContinueCourse} className="w-full">Continue Course</Button>
               ) : (
                 <BuyCourseButton courseId={courseId} />

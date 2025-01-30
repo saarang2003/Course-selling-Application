@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.route('/create-checkout-session').post(isAuthenticated, createPayment);
 router.route('/webhook').post(express.raw);
-router.route('/courses/:courseId/detail-with-status').get();
+router.route('/courses/:courseId/detail-with-status').get(isAuthenticated );
 
 export default router;

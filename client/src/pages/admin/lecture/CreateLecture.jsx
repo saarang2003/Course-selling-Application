@@ -65,7 +65,7 @@ const CreateLecture = () => {
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            onClick={() => navigate(`/admin/course/${courseId}`)}
+            onClick={() => navigate(`/admin/courses/${courseId}`)}
           >
             Back to course
           </Button>
