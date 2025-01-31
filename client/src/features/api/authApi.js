@@ -33,7 +33,6 @@ export const authApi = createApi({
                     const user = result.data.user;
                     dispatch(userLoggedIn({ user }));
                     dispatch(userLoggedIn({ user }));
-console.log("Updated Redux state:", appStore.getState());
             
                     toast.success(result.data.message || "Login successful!");
                 } catch (error) {

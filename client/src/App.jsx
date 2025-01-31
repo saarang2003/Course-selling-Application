@@ -18,7 +18,7 @@ import EditLecture from "./pages/admin/lecture/editLecture";
 import CourseDetail from "./pages/student/CourseDetail";
 import CourseProgress from "./pages/student/CourseProgress";
 import SearchPage from "./pages/student/SearchPage";
-import { AuthenticatedUser } from "./components/ProtectedRoute";
+import {AdminRoute ,  ProtectedRoute , AuthenticatedUser } from "./components/ProtectedRoute";
 import PurchaseCourseProtectedRoute from "./components/PurchaseCourseProtectedRoute";
 
 const appRouter = createBrowserRouter([
@@ -47,51 +47,51 @@ const appRouter = createBrowserRouter([
       {
         path: "my-learning",
         element: (
-          <AuthenticatedUser>
+          <ProtectedRoute>
             <MyLearning />,
-          </AuthenticatedUser>
+          </ProtectedRoute>
         ),
       },
       {
         path: "profile",
         element: (
-          <AuthenticatedUser>
+          <ProtectedRoute>
             <Profile />,
-          </AuthenticatedUser>
+          </ProtectedRoute>
         ),
       },
       {
         path: "course/search",
         element: (
-          <AuthenticatedUser>
+          <ProtectedRoute>
             <SearchPage />,
-          </AuthenticatedUser>
+          </ProtectedRoute>
         ),
       },
       {
         path: "course-detail/:courseId",
         element: (
-          <AuthenticatedUser>
+          <ProtectedRoute>
             <CourseDetail />,
-          </AuthenticatedUser>
+          </ProtectedRoute>
         ),
       },
       {
         path: "course-progress/:courseId",
         element: (
-          <AuthenticatedUser>
+          <ProtectedRoute>
             <PurchaseCourseProtectedRoute>
             <CourseProgress />,
             </PurchaseCourseProtectedRoute>
-          </AuthenticatedUser>
+          </ProtectedRoute>
         ),
       },
       {
         path: "admin",
         element: (
-          <AuthenticatedUser>
-            <Sidebar />,
-          </AuthenticatedUser>
+          <AdminRoute>
+          <Sidebar />
+        </AdminRoute>
         ),
         children: [
           {

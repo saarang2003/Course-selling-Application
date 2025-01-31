@@ -62,6 +62,7 @@ const Login = () => {
     try {
       await action(inputData).unwrap();
     } catch (error) {
+      console.log("error in login ", error)
       toast.error(error?.data?.message || "An unexpected error occurred.");
     }
   };
